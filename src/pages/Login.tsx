@@ -125,9 +125,6 @@ const Login: React.FC = () => {
         document.body
       )}
 
-      <div className="login-card">
-        {/* 画像パスは適宜調整してください */}
-        {/* <img src="/logo.svg" alt="Logo" className="login-logo" /> */}
         
         {isResetMode ? (
           <div className="fade-in">
