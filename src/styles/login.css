@@ -5,6 +5,7 @@
   align-items: center;
   min-height: 100vh;
   background-color: #f8fafc;
+  width: 100%;          
 }
 
 .login-card {
@@ -14,6 +15,7 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+  box-sizing: border-box;
 }
 
 .login-subtitle {
@@ -81,6 +83,17 @@
   color: white;
   padding: 15px;
   border-radius: 6px;
+}
+
+/* エラーメッセージ */
+.error-banner {
+  color: red;
+  word-break: break-word; 
+  white-space: pre-wrap;  
+  font-size: 14px;       
+  line-height: 1.5;       
+  margin-bottom: 15px;    
+  width: 100%;           
 }
 
 /* Google-icon */

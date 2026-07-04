@@ -147,9 +147,9 @@ const Login: React.FC = () => {
         )}
 
       {isResetMode ? (
-        <div className="fade-in">
+        <div className="login-card fade-in">
           <h2 className="login-subtitle">Reset Password</h2>
-          {errorMsg && <div className="error-banner" style={{ color: 'red' }}>{errorMsg}</div>}
+          {errorMsg && <div className="error-banner">{errorMsg}</div>}
           <form onSubmit={handleResetPassword}>
             <input type="email" placeholder="Email Address" className="login-input" value={email} onChange={(e) => setEmail(e.target.value)} required />
             <button type="submit" className="submit-btn" disabled={isLoading}>
@@ -161,7 +161,7 @@ const Login: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="fade-in">
+        <div className="login-card fade-in">
           <h2 className="login-subtitle">{isLoginMode ? 'Welcome Back' : 'Create Account'}</h2>
 
           <button 
@@ -191,7 +191,7 @@ const Login: React.FC = () => {
 </button>
 
           <div className="separator"><span>or</span></div>
-          {errorMsg && <div className="error-banner" style={{ color: 'red' }}>{errorMsg}</div>}
+          {errorMsg && <div className="error-banner">{errorMsg}</div>}
 
           <form onSubmit={handleEmailAuth}>
             {!isLoginMode && (
