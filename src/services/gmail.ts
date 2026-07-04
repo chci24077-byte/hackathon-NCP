@@ -4,12 +4,11 @@ import { mockRawEmailInbox } from '../types/assignment';
 // Gmail からメールを取得して { subject, body } の配列を返す。
 // 実運用では OAuth トークンを使用して Gmail REST API を呼び出します。
 // 開発環境では環境変数 `VITE_GMAIL_OAUTH_TOKEN` にトークンを入れると実際に取得を試みます。
-export async function getGmailMessages(): Promise<{ subject: string; body: string }[]> {
+export async function getGmailMessages(token: string): Promise<{ subject: string; body: string }[]> {
 	console.log('Gmail取得開始');
 
-	const token = (import.meta as any).env?.VITE_GMAIL_OAUTH_TOKEN;
 	if (!token) {
-		console.warn('VITE_GMAIL_OAUTH_TOKEN が設定されていません。モックデータを返します。');
+		console.warn('アクセストークンが渡されませんでした。モックデータを返します。');
 		return mockRawEmailInbox;
 	}
 

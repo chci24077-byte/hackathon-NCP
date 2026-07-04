@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { extractAssignmentsFromEmails } from '../services/OpenRouter';
-import { mockRawEmailInbox } from '../types/assignment';
+import { getGmailMessages } from '../services/gmail';
 import '../styles/home.css';
 
 const Home: React.FC = () => {
@@ -30,11 +30,17 @@ const Home: React.FC = () => {
     setMessage('');
     setLoading(true);
     try {
-      const result = await extractAssignmentsFromEmails(mockRawEmailInbox);
+      const token = localStorage.getItem('gmail_access_token') || '';
+      if (!token) {
+        setMessage('⚠️ Googleログインしてアクセストークンを取得してください。');
+        setLoading(false);
+        return;
+      }
+      const rawEmails = await getGmailMessages(token);
+      const result = await extractAssignmentsFromEmails(rawEmails);
       console.log('AI result', result);
       setLoading(false);
       if (result.length > 0) {
-        // 取得したAIの結果をそのまま state に設定
         setAssignments(result as any);
         setMessage(`✅ ${result.length}件取得しました！`);
       } else {
