@@ -1,43 +1,94 @@
 <!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>課題まとめAI - モック</title>
-  <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
-  <header>
-    <h1>課題一覧（モック）</h1>
-  </header>
-  <main>
-    <section class="controls">
-      <label>サービス
-        <select id="filter-service">
-          <option value="all">すべて</option>
-        </select>
-      </label>
-      <label>ステータス
-        <select id="filter-status">
-          <option value="all">すべて</option>
-          <option value="未提出">未提出</option>
-          <option value="提出済み">提出済み</option>
-        </select>
-      </label>
-      <label>検索
-        <input id="search" placeholder="課題名で検索...">
-      </label>
-      <button id="reload">再読み込み</button>
-    </section>
+  <div class="app">
+    <aside class="sidebar" aria-label="サイドバー">
+      <div class="brand">課題まとめAI</div>
+      <nav>
+        <ul>
+          <li class="active">🏠 ホーム</li>
+          <li>📋 課題一覧</li>
+          <li>📅 カレンダー</li>
+          <li>🔗 サービス連携</li>
+          <li>⚙️ 設定</li>
+        </ul>
+      </nav>
+      <div class="logout">ログアウト</div>
+    </aside>
 
-    <table class="tasks">
-      <thead>
-        <tr><th>課題名</th><th>科目</th><th>サービス</th><th>締切</th><th>ステータス</th></tr>
+    <main class="main-content container">
+      <header class="topbar">
+        <h1>ホーム</h1>
+        <div class="user-area">
+          <button class="icon">🔔</button>
+          <div class="avatar">山田 太郎</div>
+        </div>
+      </header>
+
+      <section class="overview">
+        <div class="card stat">
+          <div class="stat-title">期限が近い課題</div>
+          <div class="stat-value">3 件</div>
+          <div class="stat-sub">提出期限が3日以内</div>
+        </div>
+        <div class="card stat">
+          <div class="stat-title">今週の課題</div>
+          <div class="stat-value">7 件</div>
+          <div class="stat-sub">提出期限が今週中</div>
+        </div>
+        <div class="card stat">
+          <div class="stat-title">提出済み</div>
+          <div class="stat-value">5 件</div>
+          <div class="stat-sub">完了した課題数</div>
+        </div>
+        <div class="card stat">
+          <div class="stat-title">すべての課題</div>
+          <div class="stat-value">15 件</div>
+          <div class="stat-sub">すべての課題</div>
+        </div>
+      </section>
+
+      <section class="controls-card card">
+        <div class="controls">
+          <label class="field">サービス
+            <select id="filter-service" class="select">
+              <option value="all">すべて</option>
+            </select>
+          </label>
+          <label class="field">ステータス
+            <select id="filter-status" class="select">
+              <option value="all">すべて</option>
+              <option value="未提出">未提出</option>
+              <option value="提出済み">提出済み</option>
+            </select>
+          </label>
+          <label class="field search">検索
+            <input id="search" class="input" placeholder="課題名で検索...">
+          </label>
+          <button id="reload" class="btn btn-primary">再読み込み</button>
+        </div>
+      </section>
+
+      <div id="loading" class="loading" aria-live="polite" hidden>読み込み中…</div>
+
+      <section class="card table-card">
+        <table class="tasks">
+          <thead>
+            <tr><th>課題名</th><th>科目</th><th>サービス</th><th>締切</th><th>ステータス</th></tr>
+          </thead>
+          <tbody id="tasks-body"></tbody>
+        </table>
+        <div class="more"><button class="btn">もっと見る</button></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="scripts/api.js"></script>
+  <script src="scripts/main.js"></script>
       </thead>
       <tbody id="tasks-body"></tbody>
     </table>
   </main>
 
+  <script src="scripts/api.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 </html>

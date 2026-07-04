@@ -14,19 +14,23 @@ function isDueSoon(iso){
 let tasks = [];
 
 async function loadTasks(){
-  document.getElementById('tasks-body').innerHTML = '<tr><td colspan="5">読み込み中...</td></tr>';
+  const loadingEl = document.getElementById('loading');
+  loadingEl.hidden = false;
+  document.getElementById('tasks-body').innerHTML = '';
   try{
-    const res = await fetch('mock/tasks.json');
-    tasks = await res.json();
+    tasks = await window.api.fetchTasks();
     renderTasks(applyFilters(tasks));
     populateServiceFilter(tasks);
   }catch(e){
-    document.getElementById('tasks-body').innerHTML = `<tr><td colspan="5">エラー: ${e.message}</td></tr>`;
+    document.getElementById('tasks-body').innerHTML = `<tr><td colspan="5">エラー: ${escapeHtml(e.message || String(e))}</td></tr>`;
+  }finally{
+    loadingEl.hidden = true;
   }
 }
 
 function populateServiceFilter(tasks){
   const sel = document.getElementById('filter-service');
+  sel.innerHTML = '<option value="all">すべて</option>';
   const services = Array.from(new Set(tasks.map(t=>t.service))).sort();
   services.forEach(s=>{
     const opt = document.createElement('option'); opt.value=s; opt.textContent=s; sel.appendChild(opt);
@@ -53,7 +57,7 @@ function renderTasks(arr){
     const tr = document.createElement('tr');
     const dueClass = isDueSoon(t.due) ? 'due-soon' : '';
     const statusClass = t.status==='提出済み' ? 'status-submitted' : 'status-missing';
-    tr.innerHTML = `<td>${escapeHtml(t.title)}</td><td>${escapeHtml(t.course)}</td><td>${escapeHtml(t.service)}</td><td class="${dueClass}">${formatDate(t.due)}</td><td class="${statusClass}">${escapeHtml(t.status)}</td>`;
+    tr.innerHTML = `<td class="title">${escapeHtml(t.title)}</td><td class="course">${escapeHtml(t.course)}</td><td class="service">${escapeHtml(t.service)}</td><td class="due ${dueClass}">${formatDate(t.due)}</td><td class="status ${statusClass}">${escapeHtml(t.status)}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -63,7 +67,12 @@ function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt
 function setup(){
   document.getElementById('filter-service').addEventListener('change',()=>renderTasks(applyFilters(tasks)));
   document.getElementById('filter-status').addEventListener('change',()=>renderTasks(applyFilters(tasks)));
-  document.getElementById('search').addEventListener('input',()=>renderTasks(applyFilters(tasks)));
+  // debounce search input
+  let debounceTimer = null;
+  document.getElementById('search').addEventListener('input',()=>{
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(()=>renderTasks(applyFilters(tasks)), 250);
+  });
   document.getElementById('reload').addEventListener('click',()=>loadTasks());
   loadTasks();
 }
