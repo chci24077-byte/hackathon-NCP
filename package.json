@@ -4,6 +4,21 @@
   "description": "ローカルで動かせる簡易UIです。`mock/tasks.json` を読み込み、一覧表示・フィルタ・検索ができます。",
   "main": "firebase.js",
   "scripts": {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+=======
+<<<<<<< HEAD
+    "dev": "vite",
+=======
+    "dev": "npx serve . -p 5500",
+    "start": "npx serve . -p 5500",
+>>>>>>> 3a7f208634c46949e6285c36a6c2b7ff1cd738c1
+>>>>>>> main
+>>>>>>> 833a50a04bc48d5a97dfc06c4d7cdec1688f9267
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +31,22 @@
   "bugs": {
     "url": "https://github.com/chci24077-byte/hackathon-NCP/issues"
   },
+<<<<<<< HEAD
   "homepage": "https://github.com/chci24077-byte/hackathon-NCP#readme"
+=======
+  "homepage": "https://github.com/chci24077-byte/hackathon-NCP#readme",
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "firebase": "^12.15.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.1"
+  }
+>>>>>>> 833a50a04bc48d5a97dfc06c4d7cdec1688f9267
 }
