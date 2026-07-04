@@ -46,6 +46,7 @@ const Home: React.FC = () => {
       setMessage('❌ Gmailの取得に失敗しました。もう一度お試しください');
     }
   };
+  
 
   // ステータスをトグルする (提出済み <-> 未提出)
   const [toast, setToast] = useState('');
@@ -190,7 +191,7 @@ const Home: React.FC = () => {
               onClick={handleFetchAssignments}
               disabled={loading}
             >
-              📩 Gmailから課題を取得
+              📩 課題を取得（モック）
             </button>
             {loading && (
               <div className="loading">
