@@ -37,13 +37,22 @@ const Login: React.FC = () => {
   // Googleログイン
   const handleGoogleLogin = async () => {
     if (isLoading) return;
+    if (!auth || !provider) {
+      setErrorMsg('Firebase が正しく初期化されていません。環境変数を確認してください。');
+      return;
+    }
     setIsLoading(true);
     try {
       await signInWithPopup(auth, provider);
-      navigate('/home');
-    } catch (error) {
-      console.error(error);
-      setErrorMsg("Googleログインに失敗しました");
+      navigate('/'); // チームメンバーの修正（ルートパスへの遷移）を採用
+    } catch (error: unknown) {
+      console.error('Google login error', error);
+      if (typeof error === 'object' && error !== null && 'code' in error) {
+        const err = error as { code?: string; message?: string };
+        setErrorMsg(`Googleログインに失敗しました: ${err.code ?? ''} ${err.message ?? ''}`.trim());
+      } else {
+        setErrorMsg('Googleログインに失敗しました。');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -53,6 +62,10 @@ const Login: React.FC = () => {
   const handleEmailAuth = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
+    if (!auth) {
+      setErrorMsg('Firebase 認証が初期化されていません。環境変数を確認してください。');
+      return;
+    }
     setIsLoading(true);
     setErrorMsg('');
     try {
@@ -62,10 +75,23 @@ const Login: React.FC = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
       }
-      navigate('/home'); // ログイン成功後の遷移先
-    } catch (error) {
+      navigate('/'); // チームメンバーの修正を採用
+    } catch (error: unknown) {
       console.error(error);
-      setErrorMsg("認証に失敗しました。\n入力内容を確認してください。");
+      if (typeof error === 'object' && error !== null && 'code' in error) {
+        const err = error as { code?: string };
+        if (err.code === 'auth/email-already-in-use') {
+          setErrorMsg('このメールアドレスはすでに使われています。');
+        } else if (err.code === 'auth/invalid-email') {
+          setErrorMsg('メールアドレスの形式が正しくありません。');
+        } else if (err.code === 'auth/weak-password') {
+          setErrorMsg('パスワードは6文字以上にしてください。');
+        } else {
+          setErrorMsg('認証に失敗しました。入力内容を確認してください。');
+        }
+      } else {
+        setErrorMsg('認証に失敗しました。入力内容を確認してください。');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -77,10 +103,8 @@ const Login: React.FC = () => {
     setIsLoading(true);
     setErrorMsg('');
     try {
-      // ※事前にFirebaseコンソールでこのユーザーを作成しておくか、
-      // 存在しない場合は新規作成するロジックにする必要があります。
       await signInWithEmailAndPassword(auth, "demo@example.com", "demo1234");
-      navigate('/home');
+      navigate('/'); // ※ここも真っ白防止のために `/` に揃えました
     } catch (error) {
       console.error(error);
       setErrorMsg("デモログインに失敗しました。");
