@@ -244,3 +244,84 @@
 .gmail-button:hover{
     background:#1d4ed8;
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.progress {
+  width: 220px;
+  height: 10px;
+  background: #e6eefc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #2563eb);
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.refresh-btn {
+  background: #e2e8f0;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.message-success {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.message-error {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* 締切が近い行を強調 */
+.urgent td {
+  color: #b91c1c;
+  background-color: #fff1f2;
+}
+
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: #065f46;
+  font-size: 18px;
+  background: linear-gradient(180deg, #ecfdf5, #ffffff);
+}
+
+.status {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.submitted {
+  background: #dcfce7;
+  color: #15803d;
+}
+.unsubmitted {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
