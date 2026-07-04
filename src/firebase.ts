@@ -27,10 +27,8 @@ if (hasApiKey) {
   }
   auth = getAuth(app);
   provider = new GoogleAuthProvider();
-
-  provider.addScope(
-  "https://www.googleapis.com/auth/gmail.readonly"
-  );
+  provider.setCustomParameters({ prompt: 'select_account' });
+  provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
 } else {
   // When no API key is provided (local dev without credentials),
   // avoid calling Firebase functions that try to validate the key so the app can render.
