@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>課題まとめAI - モック</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header>
+    <h1>課題一覧（モック）</h1>
+  </header>
+  <main>
+    <section class="controls">
+      <label>サービス
+        <select id="filter-service">
+          <option value="all">すべて</option>
+        </select>
+      </label>
+      <label>ステータス
+        <select id="filter-status">
+          <option value="all">すべて</option>
+          <option value="未提出">未提出</option>
+          <option value="提出済み">提出済み</option>
+        </select>
+      </label>
+      <label>検索
+        <input id="search" placeholder="課題名で検索...">
+      </label>
+      <button id="reload">再読み込み</button>
+    </section>
+
+    <table class="tasks">
+      <thead>
+        <tr><th>課題名</th><th>科目</th><th>サービス</th><th>締切</th><th>ステータス</th></tr>
+      </thead>
+      <tbody id="tasks-body"></tbody>
+    </table>
+  </main>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
