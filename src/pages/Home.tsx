@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { extractAssignmentsFromEmails } from '../services/OpenRouter';
 import { getGmailMessages } from '../services/gmail';
 import '../styles/home.css';
@@ -9,6 +11,8 @@ const Home: React.FC = () => {
   const [message, setMessage] = useState('');
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [progress, setProgress] = useState(0);
+  const [user, setUser] = useState<any>(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [assignments, setAssignments] = useState([
     {
       id: '1',
@@ -21,8 +25,24 @@ const Home: React.FC = () => {
   ]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return unsubscribe;
+  }, []);
+
   const handleLoginClick = () => {
     navigate('/login');
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setShowUserMenu(false);
+    } catch (error) {
+      console.error('ログアウトに失敗しました', error);
+    }
   };
 
   const handleFetchAssignments = async () => {
@@ -150,10 +170,54 @@ const Home: React.FC = () => {
         <header className="main-header">
           <h1 className="page-title">ホーム</h1>
           <div className="header-actions">
-            {/* ベルマークなどのアイコンの代わりにログインボタンを配置 */}
-            <button className="header-login-btn" onClick={handleLoginClick}>
-              ログイン
-            </button>
+            {user ? (
+              <div className="user-menu-container" style={{ position: 'relative' }}>
+                <button
+                  className="header-login-btn"
+                  onClick={() => setShowUserMenu((prev) => !prev)}
+                >
+                  {user.photoURL && (
+                    <img
+                      src={user.photoURL}
+                      width={32}
+                      height={32}
+                      alt="avatar"
+                      style={{ borderRadius: '50%', marginRight: 8, verticalAlign: 'middle' }}
+                    />
+                  )}
+                  <span style={{ verticalAlign: 'middle' }}>
+                    {user.displayName || user.email || 'ユーザー'} ▼
+                  </span>
+                </button>
+                {showUserMenu && (
+                  <div
+                    className="user-dropdown"
+                    style={{
+                      position: 'absolute',
+                      top: 'calc(100% + 8px)',
+                      right: 0,
+                      background: '#fff',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                      borderRadius: 12,
+                      zIndex: 20,
+                      minWidth: 180,
+                      padding: 8,
+                    }}
+                  >
+                    <button className="dropdown-item" onClick={() => { handleLogout(); }}>
+                      ログアウト
+                    </button>
+                    <button className="dropdown-item" onClick={() => { setShowUserMenu(false); handleLoginClick(); }}>
+                      別のアカウントでログイン
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button className="header-login-btn" onClick={handleLoginClick}>
+                ログイン
+              </button>
+            )}
           </div>
         </header>
 
