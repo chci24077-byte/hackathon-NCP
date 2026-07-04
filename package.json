@@ -4,8 +4,12 @@
   "description": "ローカルで動かせる簡易UIです。`mock/tasks.json` を読み込み、一覧表示・フィルタ・検索ができます。",
   "main": "firebase.js",
   "scripts": {
+<<<<<<< HEAD
+    "dev": "vite",
+=======
     "dev": "npx serve . -p 5500",
     "start": "npx serve . -p 5500",
+>>>>>>> 3a7f208634c46949e6285c36a6c2b7ff1cd738c1
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
