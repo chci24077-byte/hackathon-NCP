@@ -9,8 +9,7 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import { auth, provider } from '../firebase';
-
-/* --- Styles --- */
+import '../styles/login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
