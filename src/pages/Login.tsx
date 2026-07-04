@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import {
+  GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -43,8 +44,16 @@ const Login: React.FC = () => {
     }
     setIsLoading(true);
     try {
-      await signInWithPopup(auth, provider);
-      navigate('/'); // チームメンバーの修正（ルートパスへの遷移）を採用
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken;
+      console.log('Google accessToken:', accessToken);
+      if (!accessToken) {
+        setErrorMsg('Googleのアクセストークンを取得できませんでした。');
+        return;
+      }
+      localStorage.setItem('gmail_access_token', accessToken);
+      navigate('/');
     } catch (error: unknown) {
       console.error('Google login error', error);
       if (typeof error === 'object' && error !== null && 'code' in error) {
