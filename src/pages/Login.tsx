@@ -44,7 +44,7 @@ const Login: React.FC = () => {
     setIsLoading(true);
     try {
       await signInWithPopup(auth, provider);
-      navigate('/');
+      navigate('/'); // チームメンバーの修正（ルートパスへの遷移）を採用
     } catch (error: unknown) {
       console.error('Google login error', error);
       if (typeof error === 'object' && error !== null && 'code' in error) {
@@ -75,7 +75,7 @@ const Login: React.FC = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
       }
-      navigate('/'); // ログイン成功後はホームへ戻る
+      navigate('/'); // チームメンバーの修正を採用
     } catch (error: unknown) {
       console.error(error);
       if (typeof error === 'object' && error !== null && 'code' in error) {
@@ -103,10 +103,8 @@ const Login: React.FC = () => {
     setIsLoading(true);
     setErrorMsg('');
     try {
-      // ※事前にFirebaseコンソールでこのユーザーを作成しておくか、
-      // 存在しない場合は新規作成するロジックにする必要があります。
       await signInWithEmailAndPassword(auth, "demo@example.com", "demo1234");
-      navigate('/plan');
+      navigate('/'); // ※ここも真っ白防止のために `/` に揃えました
     } catch (error) {
       console.error(error);
       setErrorMsg("デモログインに失敗しました。");
