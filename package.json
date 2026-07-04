@@ -1,7 +1,7 @@
 {
   "name": "hackathon-ncp",
   "version": "1.0.0",
-  "description": "ローカルで動かせる簡易UIです。`mock/tasks.json` を読み込み、一覧表示・フィルタ・検索ができます。",
+  "description": "ローカルで動かせる簡易UIです。mock/tasks.json を読み込み、一覧表示・フィルタ・検索ができます。",
   "main": "firebase.ts",
   "scripts": {
     "dev": "vite",
