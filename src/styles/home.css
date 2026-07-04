@@ -229,3 +229,18 @@
   color: #475569;
   cursor: pointer;
 }
+
+.gmail-button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.gmail-button:hover{
+    background:#1d4ed8;
+}
