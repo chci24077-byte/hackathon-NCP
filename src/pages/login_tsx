@@ -12,9 +12,6 @@ import {
 import { auth, provider } from '../firebase'; 
 
 /* --- Styles --- */
-// ※環境に合わせてパスを調整してください
-// import '../styles/login.css'; 
-// import '../styles/main.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
