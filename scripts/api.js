@@ -1,18 +1,23 @@
 (function(){
+  const apiUrl = '/api/tasks';
+  const mockUrl = 'mock/tasks.json';
+
   async function fetchTasks(){
-    // Try real API first
+    // Try real API first, but fall back to mock if the API is unavailable or returns an error.
     try{
-      const res = await fetch('/api/tasks');
+      const res = await fetch(apiUrl);
       if(res.ok){
         const data = await res.json();
         return normalize(data);
       }
+      console.warn(`API ${apiUrl} returned status ${res.status}. Falling back to mock data.`);
     }catch(e){
-      // ignore and fallback to mock
+      console.warn(`API fetch failed: ${e.message}. Falling back to mock data.`);
     }
-    // Fallback to local mock data
-    const res2 = await fetch('mock/tasks.json');
+
+    const res2 = await fetch(mockUrl);
     const data2 = await res2.json();
+    console.info(`Loaded tasks from mock data (${mockUrl}).`);
     return normalize(data2);
   }
 

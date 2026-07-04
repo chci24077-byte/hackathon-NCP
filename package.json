@@ -4,8 +4,9 @@
   "description": "ローカルで動かせる簡易UIです。`mock/tasks.json` を読み込み、一覧表示・フィルタ・検索ができます。",
   "main": "firebase.js",
   "scripts": {
-    "dev": "npx serve . -p 5500",
-    "start": "npx serve . -p 5500",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,8 +24,9 @@
   "devDependencies": {
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@types/react-router-dom": "^5.3.3",
-    "serve": "^14.2.6"
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
   },
   "dependencies": {
     "firebase": "^12.15.0",

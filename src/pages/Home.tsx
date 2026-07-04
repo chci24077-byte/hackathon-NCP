@@ -6,8 +6,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    // ログイン画面へ遷移する
-    navigate('/login'); 
+    navigate('/login');
   };
 
   return (
