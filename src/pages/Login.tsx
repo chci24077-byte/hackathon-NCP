@@ -40,7 +40,7 @@ const Login: React.FC = () => {
     setIsLoading(true);
     try {
       await signInWithPopup(auth, provider);
-      navigate('/plan');
+      navigate('/home');
     } catch (error) {
       console.error(error);
       setErrorMsg("Googleログインに失敗しました");
@@ -62,7 +62,7 @@ const Login: React.FC = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
       }
-      navigate('/plan'); // ログイン成功後の遷移先
+      navigate('/home'); // ログイン成功後の遷移先
     } catch (error) {
       console.error(error);
       setErrorMsg("認証に失敗しました。\n入力内容を確認してください。");
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
       // ※事前にFirebaseコンソールでこのユーザーを作成しておくか、
       // 存在しない場合は新規作成するロジックにする必要があります。
       await signInWithEmailAndPassword(auth, "demo@example.com", "demo1234");
-      navigate('/plan');
+      navigate('/home');
     } catch (error) {
       console.error(error);
       setErrorMsg("デモログインに失敗しました。");
