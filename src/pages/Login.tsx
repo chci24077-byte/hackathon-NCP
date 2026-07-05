@@ -53,7 +53,7 @@ const Login: React.FC = () => {
         return;
       }
       localStorage.setItem('gmail_access_token', accessToken);
-      navigate('/');
+      navigate('/home');
     } catch (error: unknown) {
       console.error('Google login error', error);
       if (typeof error === 'object' && error !== null && 'code' in error) {
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: username });
       }
-      navigate('/'); // チームメンバーの修正を採用
+      navigate('/home'); // チームメンバーの修正を採用
     } catch (error: unknown) {
       console.error(error);
       if (typeof error === 'object' && error !== null && 'code' in error) {
