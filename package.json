@@ -1,12 +1,12 @@
 {
   "name": "hackathon-ncp",
   "version": "1.0.0",
-  "description": "ローカルで動かせる簡易UIです。mock/tasks.json を読み込み、一覧表示・フィルタ・検索ができます。",
-  "main": "firebase.ts",
+  "description": "ローカルで動かせる簡易UIです。`mock/tasks.json` を読み込み、一覧表示・フィルタ・検索ができます。",
+  "main": "firebase.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "serve": "npx serve . -p 5500",
+    "start": "npx serve . -p 5500",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,7 +16,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/chci24077-byte/hackathon-NCP/issues"
   },
@@ -24,9 +24,10 @@
   "devDependencies": {
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^4.3.1",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.1"
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "serve": "^14.2.6",
+    "vite": "^8.1.3"
   },
   "dependencies": {
     "firebase": "^12.15.0",
