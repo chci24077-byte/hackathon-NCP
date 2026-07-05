@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { extractAssignmentsFromEmails } from '../services/OpenRouter';
 import { getGmailMessages } from '../services/gmail';
 import '../styles/home.css';
 
