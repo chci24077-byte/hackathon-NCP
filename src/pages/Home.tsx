@@ -1,3 +1,5 @@
+import { DUMMY_EMAILS } from "../mockData";
+import { analyzeEmail } from "../services/ai";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
@@ -22,6 +24,7 @@ const Home: React.FC = () => {
       status: '未提出',
     },
   ]);
+  const [tasks, setTasks] = useState<Array<{title: string; course: string; due: string; service: string; status: string}>>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,7 +74,38 @@ const Home: React.FC = () => {
       setMessage('❌ Gmailの取得に失敗しました。もう一度お試しください');
     }
   };
-  
+
+  const handleAnalyze = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+      const detectedTasks: Array<{title: string; course: string; due: string; service: string; status: string}> = [];
+      const targetEmails = DUMMY_EMAILS;
+      for (const email of targetEmails) {
+        const result = await analyzeEmail(email.subject, email.body);
+        if (result.isAssignment) {
+          detectedTasks.push({
+            title: result.assignmentName,
+            course: result.courseName,
+            due: result.deadline,
+            service: result.submissionPlatform,
+            status: '未提出',
+          });
+        }
+      }
+      setTasks(detectedTasks);
+      if (detectedTasks.length > 0) {
+        setMessage(`✅ ${detectedTasks.length}件の課題を抽出しました`);
+      } else {
+        setMessage('⚠️ 課題が検出されませんでした');
+      }
+    } catch (error) {
+      console.error('解析エラー', error);
+      setMessage('❌ 課題抽出に失敗しました');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // ステータスをトグルする (提出済み <-> 未提出)
   const [toast, setToast] = useState('');
@@ -262,6 +296,14 @@ const Home: React.FC = () => {
             >
               📩 課題を取得（モック）
             </button>
+            <button
+              onClick={handleAnalyze}
+              className="gmail-button"
+              style={{ marginLeft: 12 }}
+              disabled={loading}
+            >
+              AIで課題抽出
+            </button>
             {loading && (
               <div className="loading">
                 <span>📩 Gmail取得中...</span>
@@ -303,7 +345,7 @@ const Home: React.FC = () => {
 
           {/* テーブル */}
           <div className="table-container">
-            {total === 0 ? (
+            {tasks.length === 0 ? (
               <div className="empty-state">🎉 現在課題はありません！</div>
             ) : (
               <table className="task-table">
@@ -317,27 +359,15 @@ const Home: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedAssignments.map((task) => {
-                    const dueTs = parseDue((task as any).dueDate);
-                    const diffDays = (dueTs - Date.now()) / (1000 * 60 * 60 * 24);
-                    const isUrgent = diffDays >= 0 && diffDays <= 1; // 24時間以内
-                    return (
-                      <tr key={task.id} className={isUrgent ? 'urgent' : undefined}>
-                        <td className="task-name">{task.title}</td>
-                        <td>{task.courseName}</td>
-                        <td>{task.submitTo}</td>
-                        <td>{task.dueDate}{isUrgent && <span style={{marginLeft:8}}>（明日締切）</span>}</td>
-                        <td>
-                          <button
-                            className={`status ${((task as any).status === '提出済み') ? 'submitted' : 'unsubmitted'}`}
-                            onClick={() => toggleStatus((task as any).id)}
-                          >
-                            {(task as any).status ?? ((task as any).isMerged ? 'マージ済み' : '未提出')}
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {tasks.map((task) => (
+                    <tr key={task.title}>
+                      <td className="task-name">{task.title}</td>
+                      <td>{task.course}</td>
+                      <td>{task.service}</td>
+                      <td>{task.due}</td>
+                      <td>{task.status}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             )}
