@@ -325,3 +325,24 @@
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
+
+/* ユーザードロップダウンのメニューアイテム */
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #334155;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* ホバー（マウスカーソルを乗せたとき）のアニメーション */
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}

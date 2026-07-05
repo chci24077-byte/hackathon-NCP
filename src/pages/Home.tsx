@@ -189,7 +189,7 @@ const Home: React.FC = () => {
       <aside className="sidebar">
         <div className="sidebar-logo" style={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}>
           {/* ロゴ画像を配置（テキストも画像に含まれているため、文字は削除） */}
-          <img src="/logo.png" alt="タスクン ロゴ" style={{ height: '60px', objectFit: 'contain' }} />
+          <img src="/logo.png" alt="タスクン ロゴ" style={{ height: '200px', objectFit: 'contain' }} />
         </div>
         <nav className="sidebar-nav">
           <ul>
@@ -235,10 +235,11 @@ const Home: React.FC = () => {
                       top: 'calc(100% + 8px)',
                       right: 0,
                       background: '#fff',
-                      boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                      border: '1px solid #e2e8f0', /* うっすらとした枠線を追加 */
                       borderRadius: 12,
                       zIndex: 20,
-                      minWidth: 180,
+                      minWidth: 220, /* 180から220に広げて改行を防ぐ */
                       padding: 8,
                     }}
                   >
