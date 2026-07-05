@@ -96,10 +96,10 @@ const Login: React.FC = () => {
         } else if (err.code === 'auth/weak-password') {
           setErrorMsg('パスワードは6文字以上にしてください。');
         } else {
-          setErrorMsg('認証に失敗しました。入力内容を確認してください。');
+          setErrorMsg('認証に失敗しました。入力内容をご確認ください。');
         }
       } else {
-        setErrorMsg('認証に失敗しました。入力内容を確認してください。');
+        setErrorMsg('認証に失敗しました。入力内容をご確認ください。');
       }
     } finally {
       setIsLoading(false);
@@ -203,9 +203,9 @@ const Login: React.FC = () => {
 
             <input type="email" placeholder="Email Address" className="login-input" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-            <div className="password-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="password-wrapper">
               <input type={showPassword ? 'text' : 'password'} placeholder="Password" className="login-input password-input" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1} style={{ marginLeft: '5px' }}>
+              <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
                 {showPassword ? '隠す' : '表示'}
               </button>
             </div>

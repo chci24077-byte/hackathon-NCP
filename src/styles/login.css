@@ -34,6 +34,36 @@
   box-sizing: border-box;
 }
 
+/* パスワード入力欄のラッパー */
+.password-wrapper {
+  display: flex;
+  align-items: stretch; /* 子要素の高さを自動的に揃える */
+  margin-bottom: 15px;  /* 入力欄にあった下の余白を枠全体に移動 */
+}
+
+/* ラッパー内の入力欄は下の余白をゼロにする（ズレ防止） */
+.password-wrapper .login-input {
+  margin-bottom: 0;
+}
+
+/* 表示/隠すボタンのデザイン調整 */
+.password-toggle-btn {
+  margin-left: 8px;
+  padding: 0 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background-color: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap; /* テキストの折り返しを防止 */
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.password-toggle-btn:hover {
+  background-color: #e2e8f0;
+}
+
 /* ボタンのデザイン */
 .submit-btn {
   width: 100%;
