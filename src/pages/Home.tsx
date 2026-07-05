@@ -163,6 +163,7 @@ const Home: React.FC = () => {
     return diffDays >= 0 && diffDays <= 7;
   }).length;
   const pending = Math.max(0, total - submitted);
+  
   // 締切が近い順にソート（締切未設定は後ろに回す）
   const parseDue = (d: any) => {
     if (!d) return Number.POSITIVE_INFINITY;
@@ -187,13 +188,17 @@ const Home: React.FC = () => {
     <div className="app-layout">
       {/* --- 左サイドバー --- */}
       <aside className="sidebar">
-        <div className="sidebar-logo">
-          <span className="logo-icon">📖</span> タスクン
+        <div className="sidebar-logo" style={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}>
+          {/* ロゴ画像を配置（テキストも画像に含まれているため、文字は削除） */}
+          <img src="/logo.png" alt="タスクン ロゴ" style={{ height: '60px', objectFit: 'contain' }} />
         </div>
         <nav className="sidebar-nav">
           <ul>
-            <li className="active"><span className="nav-icon">🏠</span> ホーム</li>
-            <li><span className="nav-icon">🔗</span> サービス連携</li>
+            <li className="active">
+              <img src="/home_icon.png" alt="ホーム" className="nav-icon" style={{ width: '20px', marginRight: '12px', verticalAlign: 'middle' }} /> 
+              ホーム
+            </li>
+            <li><span className="nav-icon" style={{ marginRight: '12px' }}>🔗</span> サービス連携</li>
           </ul>
         </nav>
       </aside>
@@ -258,28 +263,28 @@ const Home: React.FC = () => {
         {/* サマリーカードエリア */}
         <div className="summary-cards">
           <div className="card alert-card">
-            <span className="card-icon">⏰</span>
+            <img src="/home_icon.png" alt="期限が近い" className="card-icon" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
             <div className="card-info">
               <p className="card-label">期限が近い</p>
               <p className="card-count">{upcoming}<span>件</span></p>
             </div>
           </div>
           <div className="card">
-            <span className="card-icon">📄</span>
+            <img src="/assignment.png" alt="今回の課題" className="card-icon" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
             <div className="card-info">
               <p className="card-label">今回の課題</p>
               <p className="card-count">{pending}<span>件</span></p>
             </div>
           </div>
           <div className="card">
-            <span className="card-icon">✅</span>
+            <img src="/checkmark.png" alt="提出済み" className="card-icon" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
             <div className="card-info">
               <p className="card-label">提出済み</p>
               <p className="card-count">{submitted}<span>件</span></p>
             </div>
           </div>
           <div className="card">
-            <span className="card-icon">📑</span>
+            <img src="/assignments.png" alt="すべての課題" className="card-icon" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
             <div className="card-info">
               <p className="card-label">すべての課題</p>
               <p className="card-count">{total}<span>件</span></p>
@@ -295,7 +300,7 @@ const Home: React.FC = () => {
               onClick={handleFetchAssignments}
               disabled={loading}
             >
-              📩 課題を取得（モック）
+              課題を取得
             </button>
             <button
               onClick={handleAnalyze}
@@ -338,9 +343,9 @@ const Home: React.FC = () => {
             <select className="filter-select"><option>すべての科目 ⌄</option></select>
             <select className="filter-select"><option>すべてのステータス ⌄</option></select>
             <select className="filter-select"><option>すべてのサービス ⌄</option></select>
-            <div className="search-box">
-              <span className="search-icon">🔍</span>
-              <input type="text" placeholder="検索..." />
+            <div className="search-box" style={{ display: 'flex', alignItems: 'center', background: '#fff', padding: '0 12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}>
+              <img src="/search.png" alt="検索" className="search-icon" style={{ width: '16px', height: '16px', marginRight: '8px', opacity: 0.5 }} />
+              <input type="text" placeholder="検索..." style={{ border: 'none', outline: 'none', background: 'transparent' }} />
             </div>
           </div>
 
